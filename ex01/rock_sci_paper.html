@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>가위바위보</h1>
+        <hr />
+        <h3>승패현황</h3>
+        <p id="score"></p>
+        <hr />
+        <select name="user_rsp" id="user_rsp">
+            <option value="1">가위</option>
+            <option value="2">바위</option>
+            <option value="3">보</option>
+        </select>
+        <!-- 제출하기 버튼 -->
+        <button id="submit_btn" onclick="onClickRsp()">제출하기</button>
+
+        <!-- 돌아가기 버튼 -->
+        <button id="back_btn" onclick="backGame()" style="display: none">
+            돌아가기
+        </button>
+
+        <!-- 사용자 -->
+        <div>
+            <h3>사용자</h3>
+            <p>
+                <img src="" alt="" id="user_img" />
+            </p>
+        </div>
+
+        <!-- 컴퓨터 -->
+        <div>
+            <h3>컴퓨터</h3>
+            <p>
+                <img src="" alt="" id="computer_img" />
+            </p>
+        </div>
+
+        <!-- 결과 메세지 -->
+        <p id="message"></p>
+
+        <script>
+            // 0:승리, 1:무승부, 2:짐
+            let score = [0, 0, 0];
+
+            currentScore();
+
+            function onClickRsp() {
+                // 이김:1, 짐:-1, 무승부:0
+                let result = 0;
+
+                // 사용자 입력 확인
+                let user_input = document.getElementById("user_rsp").value;
+                console.log(user_input);
+                const u_tag = document.getElementById("user_img");
+                if (user_input == "1") {
+                    u_tag.src = "img/sci.jpg";
+                } else if (user_input == "2") {
+                    u_tag.src = "img/rock.jpg";
+                } else if (user_input == "3") {
+                    u_tag.src = "img/paper.jpg";
+                }
+
+                // 컴퓨터 입력 확인
+                let computer_input = Math.floor(Math.random() * 3) + 1;
+                console.log(computer_input);
+                const c_tag = document.getElementById("computer_img");
+                if (computer_input == "1") {
+                    c_tag.src = "img/sci.jpg";
+                } else if (computer_input == "2") {
+                    c_tag.src = "img/rock.jpg";
+                } else if (computer_input == "3") {
+                    c_tag.src = "img/paper.jpg";
+                }
+
+                // 메인 로직
+                if (user_input == "3" && computer_input == "1") {
+                    result = -1;
+                } else if (user_input == "1" && computer_input == "3") {
+                    result = 1;
+                } else if (user_input == computer_input) {
+                    result = 0;
+                } else {
+                    if (user_input > computer_input) {
+                        result = 1;
+                    } else {
+                        result = -1;
+                    }
+                }
+
+                // 결과 표시
+                const m_tag = document.getElementById("message");
+                if (result == 1) {
+                    score[0]++;
+                    m_tag.innerText = "승리했습니다";
+                } else if (result == 0) {
+                    score[1]++;
+                    m_tag.innerText = "무승부입니다";
+                } else if (result == -1) {
+                    score[2]++;
+                    m_tag.innerText = "패배했습니다";
+                }
+
+                // 버튼 display
+                document.getElementById("submit_btn").style.display = "none";
+                document.getElementById("back_btn").style.display = "inline";
+
+                console.log(result);
+                console.log(score);
+
+                // 점수
+                currentScore();
+            }
+
+            function backGame() {
+                // 버튼 display
+                document.getElementById("back_btn").style.display = "none";
+                document.getElementById("submit_btn").style.display = "inline";
+
+                const u_tag = document.getElementById("user_img");
+                const c_tag = document.getElementById("computer_img");
+                const m_tag = document.getElementById("message");
+
+                u_tag.src = "";
+                c_tag.src = "";
+                m_tag.innerText = "";
+            }
+
+            function currentScore() {
+                const score_tag = document.getElementById("score");
+
+                score_tag.innerText = `승:${score[0]}\n패:${score[2]}\n무:${score[1]}`;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script>
+            //==================================================================
+            // 변수 선언
+            // let, var, const
+            // 함수 스코프, 블록 스코프
+            // 호이스팅
+            var x;
+            var x = 10;
+            // console.log("x : " + x);
+
+            let y = 11;
+            // console.log("y : " + y);
+
+            const z = 12;
+            // console.log("z : " + z);
+
+            //==================================================================
+            // 함수 선언
+
+            function f1() {
+                alert("f함수");
+            }
+
+            //==================================================================
+            // 변수의 스코프 영역
+
+            function f2() {
+                let a1 = 11;
+                {
+                    let a2 = 12;
+                }
+                console.log(a1); // 스코프 영역에 존재해서 정상 작동
+                console.log(a2); // 스코프 영역 벗어나서 에러발생
+            }
+
+            //==================================================================
+            // 함수의 리턴
+
+            function f3() {
+                return 10; // 리턴값 지정
+            }
+
+            let result1 = f3();
+            // console.log(result); // 10 출력
+
+            //==================================================================
+            // 매개변수가 있는 함수 선언
+            // NAN(Not A Number)
+
+            function f4(a) {
+                return a - 3;
+            }
+
+            let result2_1 = f4();
+            // console.log(result2_1); // NaN출력
+
+            let result2_2 = f4(10);
+            // console.log(result2_2); // 7 출력
+        </script>
+        <style>
+            #demo {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Test</h1>
+        <p id="demo">....</p>
+        <button onclick="button_f1()">함수 실행1</button><br />
+        <hr />
+        <input type="text" id="txt" value="abc" />
+        <button onclick="button_f2_innertext()">함수 실행2_1</button>
+        <button onclick="button_f2_innerhtml()">함수 실행2_2</button>
+        <script>
+            //==================================================================
+            // DOM 객체 접근
+            const demo1 = document.getElementById("demo");
+            demo1.innerText = "aaaa"; // demo의 p에 텍스트로 abcd를 넣음
+            demo1.innerHTML = "<h2>aabb</h2>"; // p의 안에 html태그를 넣을 수 있게 한다
+
+            //==================================================================
+            // querySelector를 사용하여 DOM 객체 접근, #=아이디, .=클래스로 구분하여 작성
+            const demo2 = document.querySelector("#demo");
+            demo2.innerText = "bbbb"; // demo의 p에 텍스트로 abcd를 넣음
+            demo2.innerHTML = "<h2>bbcc</h2>"; // p의 안에 html태그를 넣을 수 있게 한다
+
+            //==================================================================
+            // button의 onclick에 함수 지정
+            function button_f1() {
+                alert("버튼 눌림");
+                demo2.innerHTML = "<h1>버튼누름</h1>";
+            }
+            //==================================================================
+            // input태그의 텍스트를 가져옴
+            const inputText = document.getElementById("txt").value;
+
+            function button_f2_innertext() {
+                console.log(inputText);
+                demo2.innerText = inputText;
+            }
+
+            function button_f2_innerhtml() {
+                console.log(inputText);
+                demo2.innerHTML = "<h1>" + inputText + "</h1>";
+            }
+        </script>
+    </body>
+</html>

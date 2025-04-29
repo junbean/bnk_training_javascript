@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <p id="p">여기의 문장을 바꿉니다</p>
+        <hr />
+
+        <img src="img/rock.jpg" id="img1" class="img1" />
+        <button onclick="changeImg()">이미지변경</button>
+
+        <script>
+            let a = 10;
+            a = "aaa";
+            a = true;
+
+            // let a = 5; // let은 중복 선언하면 에러발생
+
+            var b = 20;
+            b = "bbb";
+            b = false;
+
+            var b = 30; // var는 중복 선언해도 정상 작동, 마지막에 선언된 값을 가진다
+
+            const p = document.getElementById("p");
+            // console.log(p);
+            p.innerText = "hello";
+
+            const img1 = document.querySelector("#img1"); // 하나의 dom을 조회하는 경우
+            // const img1 = document.querySelectorAll(".img1"); // 여러개의 dom을 조회하는 경우
+
+            function changeImg() {
+                img1.src = "img/rock2.jpg";
+                p.innerHTML = "<h1>hello</h1>";
+            }
+        </script>
+    </body>
+</html>
