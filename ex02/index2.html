@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            //==========================================================
+            // 문자열에서 포함되는 문자를 가지는 판별 여부
+            // true / false 반환
+            // 대소문자를 구별함
+            let str = "Hello, World";
+            console.log(str.includes("wor"));
+            console.log(str.includes("Wor"));
+
+            // 문자열 자르기
+            // slice(0부터 시작하는 첫인덱스, 0부터 시작하는 끝인덱스)
+            // 원본 데이터를 수정하지 않는다
+            str = "abcdef";
+            console.log(str.slice(2, 5));
+            console.log(str);
+
+            str = "JavaScript";
+            console.log(str.toUpperCase());
+            console.log(str.toLowerCase());
+
+            str = "I like apples";
+            console.log(str.replace("apples", "banana"));
+
+            str = "red,green,blue";
+            let colors = str.split(",");
+            console.log(colors);
+            console.log(colors[0]);
+            console.log(colors[1]);
+            console.log(colors[2]);
+            console.log(colors.length);
+
+            str = "    Hello    ";
+            console.log(str.trim());
+
+            let numStr = "5";
+            console.log(numStr.padStart(3, "0"));
+            console.log(numStr.padStart(3, "*"));
+
+            str = "ABC";
+            console.log(str.charAt());
+            console.log(str.charCodeAt());
+
+            str = "abc";
+            console.log(str.charAt());
+            console.log(str.charCodeAt());
+
+            // 텍스트 박스에 영문자를 입려하고 버튼을 누르면
+            // 해당 글자의 아스키 코드값이 p태그에 들어간다
+        </script>
+    </body>
+</html>

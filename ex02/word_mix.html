@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>단어 조합기</h1>
+        <button onclick="combineWords()">조합하기!!</button>
+        <p id="result"></p>
+
+        <script>
+            let subArr = ["철수", "영희", "내", "너", "우리", "걔네", "친구"];
+            let objArr = [
+                "도서관",
+                "백화점",
+                "공원",
+                "아파트",
+                "집",
+                "식당",
+                "학교",
+            ];
+            let advArr = [
+                "잠을 잔다",
+                "밥을 먹는다",
+                "옷을 입는다",
+                "지인을 만난다",
+                "운동을 한다",
+                "노래를 부른다",
+                "사진을 찍는다",
+            ];
+
+            function combineWords() {
+                // 랜덤 갖고 오기
+                let rdSub = Math.floor(Math.random() * subArr.length);
+                let rdObj = Math.floor(Math.random() * objArr.length);
+                let rdAdv = Math.floor(Math.random() * advArr.length);
+
+                let chooseSub = subArr[rdSub];
+                let chooseObj = objArr[rdObj];
+                let chooseAdv = advArr[rdAdv];
+
+                // document 갖고 오기
+                const p_tag = document.getElementById("result");
+
+                // 화면 출력
+                p_tag.innerText =
+                    chooseSub + "가 " + chooseObj + "에서 " + chooseAdv;
+            }
+        </script>
+    </body>
+</html>

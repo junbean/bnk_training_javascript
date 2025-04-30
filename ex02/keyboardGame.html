@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>키보드 게임</h1>
+        <button onclick="setRandom()">시작하기</button>
+        <button onclick="reset()">처음으로</button>
+        <hr />
+        <div id="myDir" hidden style="display: hidden">
+            <input type="text" id="myInput" placeholder="한글자만 입력" />
+            <button onclick="clickBtn()">선택!!</button>
+            <p id="myResult"></p>
+            <p id="myList"></p>
+        </div>
+
+        <script>
+            // 정수
+            let rdNum;
+            let myArr = [];
+            const min = 97;
+            const max = 122;
+
+            // dom
+            const myDir = document.getElementById("myDir");
+            const myInput = document.getElementById("myInput");
+            const myResult = document.getElementById("myResult");
+            const myList = document.getElementById("myList");
+
+            function setRandom() {
+                // 랜덤 값
+                rdNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                console.log(rdNum);
+
+                // 보이게 만들기
+                myDir.style.display = "block";
+            }
+
+            function clickBtn() {
+                // 유저 값 받기
+                let userValue = myInput.value;
+
+                // 배열에 저장
+                updateList(userValue);
+
+                // 유저의 값 비교
+                if (userValue.charCodeAt(0) == rdNum) {
+                    myResult.innerText = "정답입니다!!!";
+                } else {
+                    myResult.innerText = "틀렸습니다.";
+                }
+            }
+
+            function updateList(input) {
+                myArr.push(input);
+                myList.innerText = myArr;
+            }
+
+            function reset() {
+                // 변수 삭제
+                rdNum = null;
+                myArr = [];
+
+                //
+                myList.innerText = "";
+                myResult.innerText = "";
+                myInput.value = "";
+                myDir.style.display = "hidden";
+            }
+        </script>
+    </body>
+</html>

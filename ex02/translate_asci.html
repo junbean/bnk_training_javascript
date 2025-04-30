@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>문자 아스키 코드 변환</h1>
+        <hr />
+        <input type="text" id="input1" placeholder="아무 문자나 넣으세요" />
+        <button onclick="toAsci()">문자를 아스키 코드로 변환</button>
+        <br />
+        <p id="p">...</p>
+        <script>
+            const input = document.getElementById("input1");
+            const p_tag = document.getElementById("p");
+
+            function toAsci() {
+                // 문자열 아스키 변환
+                p_tag.innerText = input.value.charCodeAt(0);
+            }
+        </script>
+    </body>
+</html>
