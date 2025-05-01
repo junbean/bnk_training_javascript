@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #item {
+                border: 1px solid black;
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px;
+                background-color: palevioletred;
+                font-size: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Event 객체</h1>
+        <hr />
+        <div id="item" onclick="f(event)">1</div>
+
+        <script>
+            function f(event) {
+                // 알람 메서드
+                // alert(event);
+
+                // event.target 이벤트가 발생한 요소를 출력
+                // console.log(event.target);
+                // console.log(event.target.id);
+                // console.log(event.target.tagName);
+
+                const targetTagName = event.target.tagName;
+                // 주의 : 태그이름은 대소문자를 구분한다
+                // 태그이름은 대문자다 div -> DIV
+                if (targetTagName == "div") {
+                    console.log("div 태그입니다");
+                } else {
+                    console.log("div 태그가 아닙니다");
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #container {
+                display: grid;
+                grid-template-columns: repeat(3, 100px);
+                gap: 10px;
+            }
+            #container > div {
+                border: 1px solid #ccc;
+                width: 100px;
+                height: 100px;
+                /* padding: 15px; */
+                /* text-align: center; */
+                text-align: center; /* 텍스트 가로 가운데 정렬 */
+                display: flex; /* Flexbox 레이아웃 사용 */
+                justify-content: center; /* 가로 축 가운데 정렬 */
+                align-items: center; /* 세로 축 가운데 정렬 */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+
+        <script>
+            const container = document.getElementById("container");
+
+            for (let i = 0; i < 10; i++) {
+                // 객체 생성
+                const item = document.createElement("div");
+                // className, id 지정
+                item.setAttribute("class", "items");
+                item.setAttribute("id", "item" + i);
+                // 함수 등록
+                item.onclick = clickItem;
+
+                // textContent
+                // DOM 객체의 그대로의 텍스트 콘텐츠를 얻을때 사용
+                // 해당 노드와 그 자손 노드의 모든 텍스트 콘텐츠를 가져오거나 설정
+                // 성능 중요
+
+                // innerText
+                // 사용자에게 보여지는 텍스트를 얻거나 설정하고 싶을 때
+                // 간단하게 요소의 텍스트 내용을 설정하는 용도
+                item.textContent = i;
+                container.appendChild(item);
+            }
+
+            function clickItem(event) {
+                // const targetTagName = event.target.tagName;
+                const text = event.target.innerText;
+                console.log(text);
+            }
+
+            /*
+            
+            <div id="item0" onclick="clickItem(event)">0</div>
+            <div id="item1" onclick="clickItem(event)">1</div>
+            <div id="item2" onclick="clickItem(event)">2</div>
+            <div id="item3" onclick="clickItem(event)">3</div>
+            <div id="item4" onclick="clickItem(event)">4</div>
+            <div id="item5" onclick="clickItem(event)">5</div>
+            <div id="item6" onclick="clickItem(event)">6</div>
+            <div id="item7" onclick="clickItem(event)">7</div>
+            <div id="item8" onclick="clickItem(event)">8</div>
+            <div id="item9" onclick="clickItem(event)">9</div>
+            */
+        </script>
+    </body>
+</html>

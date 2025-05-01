@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="container">
+            <hr />
+            <h1>제거할 엘리먼트</h1>
+            <hr />
+        </div>
+
+        <script>
+            const container = document.getElementById("container");
+            const h1 = document.querySelector("h1");
+
+            // 2초 뒤에 h1 제거
+            /*
+            setTimeout(function () {
+                container.removeChild(h1);
+            }, 2000);
+            */
+
+            // 화살표 함수
+            setTimeout(() => {
+                container.removeChild(h1);
+            }, 2000);
+
+            /*
+            <button onclick="removeElement()">h1 제거하기</button>
+            
+            function removeElement() {
+                container.removeChild(h1);
+            }
+            */
+        </script>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            div {
+                border: 1px solid black;
+                box-sizing: border-box;
+            }
+            #outer {
+                width: 200px;
+                height: 200px;
+                background-color: palegreen;
+            }
+            #middle {
+                width: 100px;
+                height: 100px;
+                background-color: peru;
+            }
+            #inner {
+                width: 50px;
+                height: 50px;
+                background-color: plum;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>이벤트 캡처링</h1>
+        <hr />
+        <div id="outer">
+            <div id="middle">
+                <div id="inner"></div>
+            </div>
+        </div>
+
+        <script>
+            const inner = document.getElementById("inner");
+            const middle = document.getElementById("middle");
+            const outer = document.getElementById("outer");
+
+            outer.addEventListener("click", function (event) {
+                console.log(event.currentTarget.id);
+            });
+
+            middle.addEventListener("click", function (event) {
+                console.log(event.currentTarget.id);
+            });
+
+            inner.addEventListener("click", function (event) {
+                console.log(event.currentTarget.id);
+            });
+        </script>
+    </body>
+</html>

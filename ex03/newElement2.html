@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <table border="1">
+            <thead class="thead">
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody class="tbody1"></tbody>
+        </table>
+        <button onclick="addArr()">추가하기</button>
+
+        <hr />
+        <table border="1">
+            <thead class="thead">
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>패스워드</th>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody class="tbody2"></tbody>
+        </table>
+
+        <button onclick="addObjArr()">추가하기</button>
+
+        <script>
+            // 그냥 배열
+            let nameArr = ["James", "Ann", "Benjamin"];
+            let cnt_1 = 1;
+
+            function addArr() {
+                // 부모 객체 가져오기
+                const tbody = document.querySelector(".tbody1");
+
+                // 객체 생성 반복
+                for (let i = 0; i < nameArr.length; i++) {
+                    // tr 객체
+                    const tr = document.createElement("tr");
+
+                    // td 객체
+                    const td1 = document.createElement("td");
+                    const td2 = document.createElement("td");
+
+                    td1.innerText = cnt_1++;
+                    td2.innerText = nameArr[i];
+
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+
+                    tbody.appendChild(tr);
+                }
+            }
+
+            // ==============================================================================
+            let cnt_2 = 1;
+            let elementObj1 = {
+                id: "user1",
+                pw: "password1",
+                name: "james",
+            };
+            let elementObj2 = {
+                id: "user2",
+                pw: "password2",
+                name: "Ann",
+            };
+            let elementObj3 = {
+                id: "user3",
+                pw: "password3",
+                name: "Benjamin",
+            };
+            let objArr = [elementObj1, elementObj2, elementObj3];
+
+            // 객체 배열 삽입 함수
+            function addObjArr() {
+                // 부모 객체 가져오기
+                const tbody = document.querySelector(".tbody2");
+
+                // 객체 생성 반복
+                for (let i = 0; i < objArr.length; i++) {
+                    // tr 객체
+                    const tr = document.createElement("tr");
+
+                    // td 객체
+                    const td1 = document.createElement("td");
+                    const td2 = document.createElement("td");
+                    const td3 = document.createElement("td");
+                    const td4 = document.createElement("td");
+
+                    td1.innerText = cnt_2++;
+                    td2.innerText = objArr[i].id;
+                    td3.innerText = objArr[i].pw;
+                    td4.innerText = objArr[i].name;
+                    // td2.innerText = objArr[i]["id"];
+                    // td3.innerText = objArr[i]["pw"];
+                    // td4.innerText = objArr[i]["name"];
+
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
+
+                    tbody.appendChild(tr);
+                }
+            }
+        </script>
+    </body>
+</html>
