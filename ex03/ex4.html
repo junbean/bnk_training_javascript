@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>이벤트 중지</h1>
+        <form name="frm" id="frm">
+            <!-- <input type="text" name="name" onfocus="f()" /><br /> 포커스될때 -->
+            <!-- <input type="text" name="name" onblur="f()" /><br /> 포커스를 잃을때 -->
+            <!--
+                객체 접근 학습 예제
+                <input type="text" name="name" /><br />
+                <input type="text" name="age" />
+            -->
+
+            <!--
+                입력창에 포커스, 포커스 해제 시 이벤트 발동
+                <input type="text" name="txt1" onblur="f_txt1()" /><br />
+                <input type="text" name="txt2" onblur="f_txt2()" /><br />
+            -->
+            <input type="text" name="txt1" /><br />
+            <input type="text" name="txt2" /><br />
+            <input type="button" value="전송" onclick="f_btn()" />
+            <!-- <input type="submit" name="btn" value="전송하기" /> -->
+        </form>
+
+        <hr />
+
+        <form name="frm2" id="frm2" onsubmit="return validateForm()">
+            <input type="text" name="txt1" /><br />
+            <input type="text" name="txt2" /><br />
+            <input type="submit" value="전송" />
+        </form>
+
+        <hr />
+
+        change event : <input type="text" id="txt3" onchange="fff3()" />
+
+        <script>
+            function f1() {
+                alert("텍스트 박스에 포커스가 설정되었어요.");
+            }
+            function f2() {
+                alert("텍스트 박스에 포커스를 잃었어요.");
+            }
+
+            function f_txt1() {
+                if (frm.txt1.value == "") {
+                    alert("텍스트를 입력하세요");
+                    setTimeout(() => {
+                        frm.txt1.focus();
+                    }, 0);
+                } else {
+                    frm.txt2.focus();
+                }
+            }
+            function f_txt2() {
+                if (frm.txt2.value == "") {
+                    alert("텍스트를 입력하세요");
+                    setTimeout(() => {
+                        frm.txt2.focus();
+                    }, 0);
+                } else {
+                    frm.txt2.blur();
+                }
+            }
+
+            // document.getElementById("frm").addEventListener("submit", f_btn());
+            // document.getElementById("frm").addEventListener("click", f_btn);
+
+            function ff1() {
+                const form = document.forms["frm"];
+                if (form.txt1.value.trim() === "") {
+                    alert("txt1 값을 입력하세요");
+                    form.txt1.focus();
+                    return;
+                }
+                form.submit();
+            }
+
+            function f_btn_submit(event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const txt1 = form.txt1.value.trim();
+                const txt2 = form.txt2.value.trim();
+
+                if (txt1 === "") {
+                    alert("txt1 값을 입력하세요.");
+                    form.txt1.focus();
+                    return;
+                } else if (txt2 === "") {
+                    alert("txt2 값을 입력하세요.");
+                    form.txt2.focus();
+                    return;
+                }
+                form.submit();
+            }
+            function f_btn_click(event) {
+                const form = event.target;
+                const txt1 = form.txt1.value.trim();
+                const txt2 = form.txt2.value.trim();
+
+                console.log(form);
+                console.log(txt1);
+
+                if (txt1 === "") {
+                    alert("txt1 값을 입력하세요.");
+                    form.txt1.focus();
+                    return;
+                } else if (txt2 === "") {
+                    alert("txt2 값을 입력하세요.");
+                    form.txt2.focus();
+                    return;
+                }
+                form.submit();
+            }
+
+            //==================================================
+            function validateForm() {
+                const form = document.forms["frm2"];
+                if (form.txt1.value.trim() === "") {
+                    alert("txt1값을 입력하세요");
+                    form.txt1.focus();
+                    return;
+                }
+                return;
+            }
+
+            //================================================
+            // onchange() : blur가 됐을때 이전 값과 현재 값을 비교하여 달라지면 발생
+            // 이건 대소문자도 구분한다 aaa -> AAA : onchange()발생
+            // 이전 값과 일치하면 발생하지 않는다 aaa -> aaa : 발생 안함
+            function fff3() {
+                console.log("change 이벤트 발생");
+            }
+
+            //=================================================
+            // event.preventDefault()
+            // 고유의 이벤트 중단
+
+            /*
+            개발자 모드에서 name속성을 사용해서 value값을 가져오기
+
+            frm
+                name이 frm인 요소에 접근
+                <form name="frm">
+                    <input type="text" name="age">
+                </form>
+
+
+            frm.name
+                frm의 자식 요소중에 name='name'인 객체에
+                <input type="text" name="name">
+
+            frm.name.value
+                frm -> name인 자식 요소의 value값을 가져온다
+                input인 경우에 아무것도 없다면 ''을 반환한다
+
+
+
+
+            
+
+            버튼 클릭시 아이디 중복 확인
+            비번 확인 구현
+            이름은 그냥
+            
+            */
+        </script>
+    </body>
+</html>

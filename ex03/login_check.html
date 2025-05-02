@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>로그인 Page</h1>
+        <hr />
+        <form id="form" action="login" method="post">
+            <div>
+                <label for="id">ID : </label>
+                <input type="text" id="id" name="id" />
+                <input type="button" id="idCheckBtn" value="아이디 중복 확인" />
+                <br />
+                <a id="id_message" class="message"></a>
+            </div>
+            <br />
+            <div>
+                <label for="pw">PW : </label>
+                <input type="text" id="pw" name="pw" />
+                <br />
+                <label for="pw_check">PW CHECK : </label>
+                <input type="text" id="pw_check" />
+                <br />
+                <a id="pw_message" class="message"></a>
+            </div>
+            <br />
+            <div>
+                <label for="name">NAME : </label>
+                <input type="text" id="name" name="name" />
+            </div>
+
+            <input type="submit" value="등록하기" />
+        </form>
+
+        <script>
+            // 아이디 중복 예제
+            let idArr = ["user1", "master011", "chessking131"];
+            let isIdDurability = false; // 중복이면 true, 아니면 false
+            let isPwEqualCheck = false; // 확인되면 true, 아니면 false
+
+            // 아이디 중복 확인 =====================================
+            // 현재는 아이디 중복 예제 리스트를 통해서 작업을 수행중
+            // DB연결시에 수정 필요
+            // 이벤트 등록
+            document
+                .getElementById("idCheckBtn")
+                .addEventListener("click", idDurabilityCheck);
+            function idDurabilityCheck() {
+                const idValue = document.getElementById("id").value;
+                const idMessage = document.getElementById("id_message");
+                if (idValue === "") {
+                    alert("아이디를 입력해주세요.");
+                    idMessage.textContent = "아이디를 입력해주세요.";
+                } else if (idArr.includes(idValue)) {
+                    alert("중복된 아이디입니다.");
+                    idMessage.textContent = "중복된 아이디입니다.";
+                    isIdDurability = true;
+                } else {
+                    alert("사용 가능한 아이디입니다.");
+                    idMessage.textContent = "사용 가능한 아이디입니다.";
+                    isIdDurability = false;
+                }
+                return;
+            }
+
+            // 패스워드 확인 =====================================
+            // 이벤트 등록
+            document
+                .getElementById("pw_check")
+                .addEventListener("change", pwEqualCheck);
+            function pwEqualCheck() {
+                const pwMessage = document.getElementById("pw_message");
+                const form = document.getElementById("form");
+                const pwValue = document.getElementById("pw").value;
+                const pwCheckValue = document.getElementById("pw_check").value;
+                if (pwValue != pwCheckValue) {
+                    pwMessage.innerText = "비밀번호가 일치하지 않습니다.";
+                    isPwEqualCheck = false;
+                } else {
+                    pwMessage.innerText = "비밀번호가 일치합니다.";
+                    isPwEqualCheck = true;
+                }
+            }
+
+            // 전송
+            document
+                .getElementById("form")
+                .addEventListener("submit", submitForm);
+
+            function submitForm(event) {
+                event.preventDefault();
+                // 유효성 검사
+            }
+        </script>
+    </body>
+</html>
