@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <h1>Index Page</h1>
+        <hr />
+        <div id="demo1">
+            <h2>Let AJAX change this text</h2>
+            <button type="button" onclick="loadDoc()">Change Content</button>
+        </div>
+
+        <div id="demo2"></div>
+
+        <hr />
+
+        <div id="demo3">
+            <h2>Let AJAX change this text2</h2>
+            <input type="text" id="demo3Text" /><br />
+            <button type="button" onclick="loadDoc2()">Change Content2</button>
+        </div>
+
+        <div id="demo4"></div>
+
+        <hr />
+
+        <div id="demo5">
+            <h2>Let AJAX change this text3</h2>
+            이름 : <input type="text" name="name" id="name" /><br />
+            나이 : <input type="text" name="age" id="age" /><br />
+            <button type="button" onclick="loadDoc3()">Change Content3</button>
+        </div>
+
+        <div id="demo6"></div>
+    </body>
+    <script>
+        function loadDoc() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                document.getElementById("demo2").innerHTML = this.responseText;
+            };
+            xhttp.open("GET", "req1", true);
+            xhttp.send();
+        }
+
+        function loadDoc2() {
+            let value = document.getElementById("demo3Text").value;
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                document.getElementById("demo4").innerHTML = this.responseText;
+            };
+            xhttp.open("GET", "req2/" + value, true);
+            xhttp.send();
+        }
+
+        function loadDoc3() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                document.getElementById("demo6").innerHTML = this.responseText;
+            };
+            xhttp.open("GET", "req3?name=" + name + "&age=" + age, true);
+            xhttp.send();
+        }
+    </script>
+</html>

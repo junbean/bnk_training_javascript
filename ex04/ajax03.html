@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="demo1">
+            <h2>Let AJAX change this text</h2>
+            <button type="button" onclick="loadDoc()">Change Content</button>
+        </div>
+
+        <div id="demo2">
+            <table></table>
+        </div>
+    </body>
+
+    <script>
+        function loadDoc() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                const responseData = JSON.parse(this.responseText);
+                console.log(responseData);
+                console.log(this.responseText);
+                document.getElementById("demo2").innerHTML = `<table border="1">
+                    <thead>
+                        <tr>
+                            <th>속성</th>
+                            <th>값</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                id
+                            </td>
+                            <td>
+                                ${responseData.id}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                name
+                            </td>
+                            <td>
+                                ${responseData.name}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                username
+                            </td>
+                            <td>
+                                ${responseData.username}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                email
+                            </td>
+                            <td>
+                                ${responseData.email}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-street
+                            </td>
+                            <td>
+                                ${responseData.address.street}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-suite
+                            </td>
+                            <td>
+                                ${responseData.address.suite}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-city
+                            </td>
+                            <td>
+                                ${responseData.address.city}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-zipcode
+                            </td>
+                            <td>
+                                ${responseData.address.zipcode}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-geo-lat
+                            </td>
+                            <td>
+                                ${responseData.address.geo.lat}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                address-geo-lng
+                            </td>
+                            <td>
+                                ${responseData.address.geo.lng}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                phone
+                            </td>
+                            <td>
+                                ${responseData.phone}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                website
+                            </td>
+                            <td>
+                                ${responseData.website}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                company-name
+                            </td>
+                            <td>
+                                ${responseData.company.name}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                company-catchPhrase
+                            </td>
+                            <td>
+                                ${responseData.company.catchPhrase}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                company-bs
+                            </td>
+                            <td>
+                                ${responseData.company.bs}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>`;
+            };
+            xhttp.open(
+                "GET",
+                "https://jsonplaceholder.typicode.com/users/1",
+                true
+            );
+            xhttp.send();
+        }
+
+        /*
+
+        JSON.stringify(obj) : 자바스크립트 객체를 문자열로 변환
+        JSON.parse(json) : 문자열을 자바스크립트 객체로 변환
+        typeof() : 타입 확인
+
+
+
+            document.getElementById("demo2").innerHTML = `<table border="1">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>address</th>
+                            <th>phone</th>
+                            <th>website</th>
+                            <th>company</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                ${responseData.id}
+                            </td>
+                            <td>
+                                ${responseData.name}
+                            </td>
+                            <td>
+                                ${responseData.username}
+                            </td>
+                            <td>
+                                ${responseData.email}
+                            </td>
+                            <td>
+                                ${responseData.address.city}
+                            </td>
+                            <td>
+                                ${responseData.phone}
+                            </td>
+                            <td>
+                                ${responseData.website}
+                            </td>
+                            <td>
+                                ${responseData.company.name}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>`;
+            };
+        */
+    </script>
+</html>
