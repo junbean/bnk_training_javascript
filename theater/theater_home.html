@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>공연 홈페이지</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Arial", sans-serif;
+                background: #f5f5f5;
+            }
+
+            /* sticky header */
+            header {
+                position: sticky;
+                top: 0;
+                background: #222;
+                color: white;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+            nav a {
+                color: white;
+                margin: 0 10px;
+                text-decoration: none;
+            }
+
+            .banner {
+                background: url("https://via.placeholder.com/1200x300?text=대표+공연+배너")
+                    no-repeat center/cover;
+                height: 300px;
+            }
+
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            .section {
+                margin: 40px 0;
+            }
+
+            .section h2 {
+                margin-bottom: 20px;
+                border-left: 5px solid #555;
+                padding-left: 10px;
+            }
+
+            .cards-wrapper {
+                overflow-x: hidden; /* 이제 스크롤 안 생김 */
+            }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr); /* 5개 정렬 고정 */
+                gap: 16px;
+            }
+
+            .card {
+                background: white;
+                border-radius: 6px;
+                overflow: hidden;
+                text-decoration: none;
+                color: inherit;
+                transition: filter 0.2s ease;
+            }
+
+            .card:hover {
+                filter: brightness(92%);
+            }
+
+            .card img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+            }
+
+            .card-body {
+                padding: 4px;
+            }
+
+            .card-body h3 {
+                margin: 0 0 8px;
+                font-size: 16px;
+            }
+
+            .card-body p {
+                font-size: 14px;
+                color: #555;
+            }
+
+            footer {
+                background: #222;
+                color: #aaa;
+                text-align: center;
+                padding: 20px;
+                margin-top: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 헤더 -->
+        <header>
+            <h1>🎭 공연의 모든 것</h1>
+            <nav>
+                <a href="#">홈</a>
+                <a href="#">공연 목록</a>
+                <a href="#">마이페이지</a>
+                <a href="#">로그인</a>
+            </nav>
+        </header>
+
+        <!-- 메인 배너 -->
+        <div class="banner"></div>
+
+        <div class="container">
+            <!-- 현재 상영작 -->
+            <section class="section">
+                <h2>🎬 현재 상영 중인 공연</h2>
+                <div class="cards-wrapper">
+                    <div class="cards">
+                        <a class="card" href="/performance/detail?id=1">
+                            <img src="images/theater_movie_1.jpg" alt="공연1" />
+                            <div class="card-body">
+                                <h3>햄릿</h3>
+                                <p>연극 · 120분 · 12세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=2">
+                            <img src="images/theater_movie_2.jpg" alt="공연2" />
+                            <div class="card-body">
+                                <h3>오페라의 유령</h3>
+                                <p>뮤지컬 · 140분 · 전체 관람가</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=3">
+                            <img src="images/theater_movie_3.jpg" alt="공연3" />
+                            <div class="card-body">
+                                <h3>지킬 앤 하이드</h3>
+                                <p>뮤지컬 · 150분 · 15세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=4">
+                            <img src="images/theater_movie_4.jpg" alt="공연4" />
+                            <div class="card-body">
+                                <h3>시라노</h3>
+                                <p>뮤지컬 · 130분 · 15세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=5">
+                            <img src="images/theater_movie_5.jpg" alt="공연5" />
+                            <div class="card-body">
+                                <h3>엘리자벳</h3>
+                                <p>뮤지컬 · 160분 · 15세 이상</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 상영 예정작 -->
+            <section class="section">
+                <h2>🎟️ 상영 예정 공연</h2>
+                <div class="cards-wrapper">
+                    <div class="cards">
+                        <a class="card" href="/performance/detail?id=1">
+                            <img src="images/theater_movie_1.jpg" alt="공연1" />
+                            <div class="card-body">
+                                <h3>햄릿</h3>
+                                <p>연극 · 120분 · 12세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=2">
+                            <img src="images/theater_movie_2.jpg" alt="공연2" />
+                            <div class="card-body">
+                                <h3>오페라의 유령</h3>
+                                <p>뮤지컬 · 140분 · 전체 관람가</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=3">
+                            <img src="images/theater_movie_3.jpg" alt="공연3" />
+                            <div class="card-body">
+                                <h3>지킬 앤 하이드</h3>
+                                <p>뮤지컬 · 150분 · 15세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=4">
+                            <img src="images/theater_movie_4.jpg" alt="공연4" />
+                            <div class="card-body">
+                                <h3>시라노</h3>
+                                <p>뮤지컬 · 130분 · 15세 이상</p>
+                            </div>
+                        </a>
+                        <a class="card" href="/performance/detail?id=5">
+                            <img src="images/theater_movie_5.jpg" alt="공연5" />
+                            <div class="card-body">
+                                <h3>엘리자벳</h3>
+                                <p>뮤지컬 · 160분 · 15세 이상</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 푸터 -->
+        <footer>&copy; 2025 공연 사이트 Corp. All rights reserved.</footer>
+    </body>
+</html>
