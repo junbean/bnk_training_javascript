@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <p id="ptxt" data-greet="hello">---------</p>
+        <input type="text" data-name="James" data-nickName="JJ" name="name" />
+        <div id="demo">div</div>
+        <hr />
+        <div
+            id="user"
+            data-user='{"name" : "James Dean", "age": 23, "job": "Actor"}'
+        ></div>
+        <div id="hobby" data-hobby='["독서", "달리기", "코딩"]'></div>
+
+        <script>
+            const ptxt = document.getElementById("ptxt");
+            console.log(ptxt.dataset.greet); // 요소 식별-1
+            console.log(ptxt.dataset["greet"]); // 요소 식별-2
+            console.log(ptxt.dataset.greet === "hello"); // 요소 판별
+
+            // data-set과 querySelector
+            // element(요소)를 의미할때 $기호를 사용하는 관습이 있다
+            const $txt = document.querySelector(`input[data-name="James"]`); // querySelector를 사용하여 식별 가능
+            const txt = document.querySelector(
+                `input[data-name="James"]`
+            ).value;
+            $txt.value = "I miss you";
+
+            //
+            const $demo = document.getElementById("demo");
+            // data-set 속성 삽입 방법-1 -> data-omment='good job'
+            $demo.dataset.comment = "good job";
+            console.log($demo.dataset.comment);
+            // data-set 속성 삽입 방법-1
+            $demo.setAttribute("data-encode-char", "utf-8");
+            console.log($demo.getAttribute("data-encode-char"));
+            // 위의 방식 둘다 호환이 가능하다
+            // 카멜 표기법을 사용하면 dataset.nickName => data-nick-name 이 된다
+            $demo.dataset.nickName = "apple";
+            console.log($demo.dataset.nickName);
+            console.log($demo.getAttribute("data-nick-name"));
+
+            // dataset안에 json데이터를 넣는 경우
+            const $div1 = document.getElementById("user");
+            const obj = $div1.dataset.user;
+            console.log(obj);
+            const user = JSON.parse(obj);
+            console.log(user);
+            console.log(user.name);
+            console.log(user.age);
+            console.log(user.job);
+
+            // dataset안에 배열을 넣는 경우
+            const $div2 = document.getElementById("hobby");
+            const arr = $div2.dataset.hobby;
+            console.log(arr);
+            const hobbies = JSON.parse(arr);
+            console.log(hobbies);
+            console.log(hobbies[1]);
+        </script>
+    </body>
+</html>

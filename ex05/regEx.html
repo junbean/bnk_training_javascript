@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- 
+            [아이디 입력 조건] 
+            1. 입력되는 전체 길이는 5~8 사이여야 한다
+            2. 아이디는 숫자와 영문자로만 사용가능하다
+            3. 아이디의 첫글자는 영문자로 한다
+        -->
+        아이디 : <input type="text" name="mid" id="mid" />
+        <input type="button" value="commit" onclick="process1()" />
+        <div id="demo1"></div>
+
+        <hr />
+        <!-- 
+            [날짜 입력 조건]
+            1. 연도 4자리, 월이나 일은 1자리이거나 2자리로 한다 (예 : 2018-05-11)
+        -->
+
+        입사연월일 : <input type="text" name="hire_date" id="hire_date" />
+        <input type="button" value="commit" onclick="process2()" />
+        <div id="demo2"></div>
+
+        <script>
+            function process2() {
+                const date = document.getElementById("hire_date").value;
+                // ^[0-9]{4} = 년도를 의미하도록 (예 : 2014)
+                // \- = '-'기호를 의미
+                // (0[1-9]|1[012]) = 그룹을 의미(0으로 시작하면 그뒤에 0~9까지 허용, 1로 시작하면 0,1,2 허용)
+                const patt = new RegExp(
+                    "^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|1[0-9]|2[0-9]|3[01])$"
+                );
+
+                if (patt.test(date)) {
+                    document.getElementById("demo2").innerHTML = "성공했습니다";
+                } else {
+                    alert("다시 입력하세요");
+                    document.getElementById("hire_date").value = "";
+                    document.getElementById("hire_date").focus();
+                    document.getElementById("demo2").innerHTML = "실패했습니다";
+                }
+            }
+
+            // 아이디 정규표현식 적용
+            function process1() {
+                const mid = document.getElementById("mid").value;
+                console.log(mid);
+                // ^[a-zA-Z]$ = 첫번째 글자는 알파벳으로 시작
+                // [0-9a-zA-Z] = 두번째부터는 숫자 알파벳을 허용한다
+                // {4} = 위의 숫자 알파벳의 문자를 4번 반복을 허용함(즉, 범위를 4까지 허용)
+                // {4, 7} = 범위를 4~7까지 허용한다
+                const patt = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,7}$");
+
+                if (patt.test(mid)) {
+                    document.getElementById("demo1").innerHTML = "성공";
+                } else {
+                    alert("다시 입력하세요");
+                    document.getElementById("mid").value = "";
+                    document.getElementById("mid").focus();
+                    document.getElementById("demo1").innerHTML =
+                        "범위에 알맞지 않습니다";
+                }
+            }
+
+            /*
+            정규표현식
+            =================================================
+            표현식          설명
+            ^               문자열의 시작
+            $               문자열의 끝
+            .               임의의 한문자
+            *               앞 문자가 없을 수도 있고 많을 수도 있다
+            +               반복을 표현하며 앞 문자가 한번 이상 반복함을 의미
+            ?               존재 여부를 표시하며 앞 문자가 없거나 있음
+            {}              횟수 또는 범위
+            ()              그룹을 의미
+            []              문자의 집합이나 범위를 나타냄. 두 문자 사이는 - 기호로 범위를 나타냄
+            |               OR 연산을 의미
+            \d              숫자(0~9) 의미
+            \D              숫자를 제외한 모든 문자
+            \s              공백 문자
+            \S              공백 문자가 아님을 의미
+            \w              단어를 만들 수 있는 알파벳 또는 숫자
+            \W              알파벳, 숫자를 제외한 문자임
+            \               \다음에 특수문자가 오면 그 문자 자체를 의미함
+            =================================================
+        */
+        </script>
+    </body>
+</html>
