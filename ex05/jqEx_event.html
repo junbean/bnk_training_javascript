@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
+    <body>
+        <script>
+            // 자바스크립트 & jQuery 학습
+            // 이벤트 등록
+
+            // jQuery
+            $(function () {
+                // 클릭 이벤트 지정
+                $("p").click(function () {
+                    $(this).hide();
+                });
+
+                // 더블 클릭 이벤트 지정
+                $("p").dblclick(function () {
+                    $(this).hide();
+                });
+
+                // 해당 요소에 마우스 접근시 실행
+                $("#p1").mouseenter(function () {
+                    alert("You entered p1!");
+                });
+
+                // 해당 요소에 마우스가 떠날시 실행
+                $("#p1").mouseleave(function () {
+                    alert("Bye! You now leave p1!");
+                });
+
+                // 해당 요소에 마우스가 클릭을 누를시 실행
+                $("#p1").mousedown(function () {
+                    alert("Mouse down over p1!");
+                });
+
+                // 해당 요소에 마우스가 클릭을 누르고 올라갈시 실행
+                $("#p1").mouseup(function () {
+                    alert("Mouse up over p1!");
+                });
+
+                // mouseenter와 mouseleave를 결합
+                $("#p1").hover(
+                    function () {
+                        alert("You entered p1!");
+                    },
+                    function () {
+                        alert("Bye! You now leave p1!");
+                    }
+                );
+
+                // input문에 focus시에 실행
+                $("input").focus(function () {
+                    $(this).css("background-color", "#cccccc");
+                });
+
+                // input문에 focus해제 시 실행
+                $("input").blur(function () {
+                    $(this).css("background-color", "#ffffff");
+                });
+
+                // 하나 이상의 이벤트 핸들러를 연결
+                $("p").on("click", function () {
+                    $(this).hide();
+                });
+                // 여러개의 이벤트 핸들러 연결
+                $("p").on({
+                    mouseenter: function () {
+                        $(this).css("background-color", "lightgray");
+                    },
+                    mouseleave: function () {
+                        $(this).css("background-color", "lightblue");
+                    },
+                    click: function () {
+                        $(this).css("background-color", "yellow");
+                    },
+                });
+            });
+
+            // JavaScript
+            document.addEventListener("DOMContentLoaded", function () {});
+        </script>
+    </body>
+</html>

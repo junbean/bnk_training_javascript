@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // Promise 반환
+            function makeFriedEgg() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve("짜잔! 계란후라이 완성!");
+                    }, 5000);
+                });
+            }
+
+            // async 지시어 지정
+            // 비동기 함수를 내포하고 있는 함수
+            // await는 async가 지정되어야 사용할 수 있다
+            // await는 해당 비동기 함수가 끝날때까지 기다린다
+            // 간단히 말하면 await는 함수를 동기 함수로 만들어준다
+            // async/await의 사용은 비동기를 동기로 만드는 것이다
+            async function cookBreakfast() {
+                console.log("계란후라이를 만들기 시작합니다.");
+
+                const friedEggResult = await makeFriedEgg(); // makeFriedEgg()의 비동기 함수가 완전히 실행될 때 까지 기다림
+                console.log(friedEggResult);
+
+                // 메인요리를 요청해서 받는 코드 추가하기(fetch 사용하기)
+                /*
+                const maindishResult = await fetch(
+                    "http://localhost:8090/cook/maindish"
+                )
+                    .then((response) => response.text())
+                    .then((data) => console.log(data))
+                    .catch((error) => console.log(error));
+                */
+                const response = await fetch(
+                    "http://localhost:8090/cook/maindish"
+                );
+                const mainDish = await response.text();
+                console.log(mainDish);
+                console.log("토스트도 준비 완료");
+            }
+
+            /*
+            function cookBreakfast() {
+                console.log("계란후라이를 만들기 시작합니다.");
+                const friedEggResult = makeFriedEgg();
+                console.log(friedEggResult); // 문제발생 - 비동기 함수가 완전히 끝나지 않았는데 결과값을 반환해야 하는 문제점 발생
+                console.log("토스트도 준비 완료");
+            }
+            // 결과
+                계란후라이를 만들기 시작합니다.
+                Promise {<pending>}[[Prototype]]: Promise[[PromiseState]]: "pending"[[PromiseResult]]: undefined
+                토스트도 준비 완료
+                커피 내리는 중
+            */
+
+            cookBreakfast();
+            console.log("커피 내리는 중");
+        </script>
+    </body>
+</html>
