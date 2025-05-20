@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game Zone</title>
+        <style>
+            /* 기본 테마 (라이트 모드) */
+            :root {
+                --bg-color: #f5f5f5;
+                --text-color: #333;
+                --card-bg: #fff;
+                --border-color: #ddd;
+                --btn-primary: #4a7bff;
+                --btn-text: white;
+                --modal-bg: rgba(0, 0, 0, 0.7);
+                --modal-content-bg: white;
+            }
+
+            /* 다크 모드 테마 */
+            .dark-mode {
+                --bg-color: #222;
+                --text-color: #eee;
+                --card-bg: #333;
+                --border-color: #555;
+                --btn-primary: #6495ed;
+                --btn-text: white;
+                --modal-content-bg: #333;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                padding: 20px;
+                transition: all 0.3s ease;
+            }
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .controls {
+                margin-bottom: 20px;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            button,
+            input,
+            select {
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+                background-color: var(--card-bg);
+                color: var(--text-color);
+            }
+
+            button {
+                cursor: pointer;
+                background-color: var(--btn-primary);
+                color: var(--btn-text);
+            }
+
+            #gameList {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .game-card {
+                background-color: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 16px;
+                transition: transform 0.2s;
+                cursor: pointer;
+            }
+
+            .game-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .game-title {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+
+            .game-info {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 12px;
+            }
+
+            .rating {
+                color: gold;
+                letter-spacing: 2px;
+            }
+
+            /* 장바구니 버튼 스타일 */
+            .cart-btn {
+                background-color: var(--btn-primary);
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .cart-counter {
+                background-color: var(--btn-primary);
+                color: white;
+                padding: 2px 8px;
+                border-radius: 50%;
+                margin-left: 5px;
+            }
+
+            .btn-group {
+                display: flex;
+                margin-top: 10px;
+            }
+
+            .btn-group .cart-btn {
+                margin-top: 0;
+            }
+
+            .btn-group .cart-btn:first-child {
+                border-radius: 4px 0 0 4px;
+            }
+
+            .btn-group .cart-btn:last-child {
+                border-radius: 0 4px 4px 0;
+            }
+
+            .remove-btn {
+                background-color: #e74c3c;
+            }
+
+            /* 모달 스타일 */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: var(--modal-bg);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-content {
+                background-color: var(--modal-content-bg);
+                padding: 20px;
+                border-radius: 8px;
+                max-width: 500px;
+                width: 90%;
+                position: relative;
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 10px;
+            }
+
+            .close-btn {
+                font-size: 24px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                color: var(--text-color);
+                padding: 0;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+                margin: 0;
+            }
+
+            .modal-description {
+                margin-bottom: 20px;
+                line-height: 1.6;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Game Zone</h1>
+            <div>
+                <span id="cartCount" class="cart-counter">0</span>
+                <button id="cartBtn">장바구니</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="darkModeBtn">다크 모드</button>
+            <input type="text" id="searchInput" placeholder="게임 검색" />
+            <select id="genreSelect">
+                <option value="all">모든 장르</option>
+                <option value="어드밴처">어드밴처</option>
+                <option value="퍼즐">퍼즐</option>
+                <option value="RPG">RPG</option>
+                <option value="액션">액션</option>
+                <option value="시뮬레이션">시뮬레이션</option>
+            </select>
+            <select id="ratingSelect">
+                <option value="all">모든 평점</option>
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+            </select>
+        </div>
+
+        <div id="gameList"></div>
+
+        <!-- 모달 -->
+        <div id="gameModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">게임 설명</h3>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <div class="modal-description" id="modalDescription"></div>
+            </div>
+        </div>
+
+        <script>
+            // 게임 데이터
+            const games = [
+                {
+                    id: 1,
+                    name: "던전 크롤러",
+                    price: 12.99,
+                    genre: "어드밴처",
+                    rating: 4,
+                    description:
+                        "미스터리한 던전을 탐험하며 보물을 찾는 흥미진진한 어드밴처 게임입니다.",
+                },
+                {
+                    id: 2,
+                    name: "퍼즐 마스터",
+                    price: 9.99,
+                    genre: "퍼즐",
+                    rating: 4,
+                    description:
+                        "두뇌를 자극하는 다양한 퍼즐을 해결하며 실력을 키워보세요.",
+                },
+                {
+                    id: 3,
+                    name: "판타지 월드",
+                    price: 24.99,
+                    genre: "RPG",
+                    rating: 5,
+                    description:
+                        "광활한 판타지 세계에서 영웅이 되어 모험을 떠나는 대작 RPG 게임입니다.",
+                },
+                {
+                    id: 4,
+                    name: "우주 탐험가",
+                    price: 19.99,
+                    genre: "어드밴처",
+                    rating: 3,
+                    description:
+                        "미지의 행성을 탐험하고 외계 생명체와 교류하는 우주 탐험 게임입니다.",
+                },
+                {
+                    id: 5,
+                    name: "블록 퍼즐",
+                    price: 4.99,
+                    genre: "퍼즐",
+                    rating: 3,
+                    description:
+                        "간단하지만 중독성 있는 블록 퍼즐 게임으로 시간 가는 줄 모르게 즐겨보세요.",
+                },
+                {
+                    id: 6,
+                    name: "좀비 서바이벌",
+                    price: 14.99,
+                    genre: "액션",
+                    rating: 4,
+                    description:
+                        "좀비 아포칼립스에서 살아남기 위한 치열한 생존 액션 게임입니다.",
+                },
+                {
+                    id: 7,
+                    name: "도시 건설자",
+                    price: 29.99,
+                    genre: "시뮬레이션",
+                    rating: 4,
+                    description:
+                        "나만의 도시를 설계하고 경영하는 심층적인 시뮬레이션 게임입니다.",
+                },
+            ];
+
+            // 장바구니 데이터
+            let cart = {};
+
+            // 현재 필터 상태
+            let currentFilter = {
+                searchTerm: "",
+                genre: "all",
+                rating: "all",
+            };
+
+            // DOM 요소
+            const darkModeBtn = document.getElementById("darkModeBtn");
+            const searchInput = document.getElementById("searchInput");
+            const genreSelect = document.getElementById("genreSelect");
+            const ratingSelect = document.getElementById("ratingSelect");
+            const gameListEl = document.getElementById("gameList");
+            const cartCountEl = document.getElementById("cartCount");
+            // 모달 추가
+            const modal = document.getElementById("gameModal");
+            const modalDescription =
+                document.getElementById("modalDescription");
+            const closeBtn = document.querySelector(".close-btn");
+
+            // 다크 모드 전환 이벤트 추가
+            darkModeBtn.addEventListener("click", () => {
+                // body요소의 클래스 목록에서 dark-mode 클래스명이 존재한다면 토글 한다
+                // 토글 : 존재한다면 없애고, 없다면 추가하는 뜻
+                document.body.classList.toggle("dark-mode");
+                // dark-mode 클래스가 있는지 확인하고 그 결과를 값으로 저장
+                const isDarkMode =
+                    document.body.classList.contains("dark-mode");
+                // 버튼의 value 변경
+                darkModeBtn.textContent = isDarkMode
+                    ? "라이트 모드"
+                    : "다크 모드";
+            });
+
+            // 모달 열기 함수
+            function openGameModal(game) {
+                modalDescription.textContent = game.description;
+                modal.style.display = "flex";
+            }
+
+            // 모달 닫기 함수
+            function closeModal() {
+                modal.style.display = "none";
+            }
+
+            // 모달 외부 클릭 시 닫기
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 닫기 버튼 클릭 시 모달 닫기
+            closeBtn.addEventListener("click", closeModal);
+
+            // 별점 표시 함수
+            function getRatingStars(rating) {
+                const convertedRating = rating;
+                const fullStars = Math.floor(convertedRating);
+                let stars = "";
+
+                // 별 모양 추가 (★: 전체, ☆: 반)
+                for (let i = 0; i < fullStars; i++) {
+                    stars += "★";
+                }
+
+                // 빈 별 추가
+                for (let i = fullStars; i < 5; i++) {
+                    stars += "☆";
+                }
+
+                return stars;
+            }
+
+            // 게임 목록 렌더링
+            function renderGames() {
+                // 필터링된 게임 목록 가져오기
+                const filteredGames = filterGames();
+
+                // 기존 게임 목록 삭제
+                gameListEl.innerHTML = "";
+
+                // 3. 각 게임마다 카드 생성 및 추가
+                filteredGames.forEach((game) => {
+                    const gameCard = document.createElement("div");
+                    gameCard.className = "game-card";
+
+                    // 장바구니에 있는지 여부 확인
+                    const inCart = cart[game.id] ? cart[game.id] : 0;
+
+                    // 장바구니 버튼 HTML
+                    let cartButtonsHtml = "";
+                    if (inCart > 0) {
+                        // 장바구니에 있는 경우 - 추가 버튼 옆에 빼기 버튼 표시
+                        cartButtonsHtml = `
+                            <div class="btn-group">
+                                <button class="cart-btn" onclick="addToCart(${game.id}, event)">
+                                    장바구니 추가 (${inCart})
+                                </button>
+                                <button class="cart-btn remove-btn" onclick="removeFromCart(${game.id}, event)">
+                                    장바구니 빼기
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // 장바구니에 없는 경우 - 추가 버튼만 표시
+                        cartButtonsHtml = `
+                            <button class="cart-btn" onclick="addToCart(${game.id}, event)">
+                                장바구니 추가
+                            </button>
+                        `;
+                    }
+
+                    const gameHtml = `
+                        <div class="game-title">${game.name}</div>
+                        <div class="game-info">
+                            <span>$${game.price.toFixed(2)}</span>
+                            <span class="rating">${getRatingStars(
+                                game.rating
+                            )}</span>
+                        </div>
+                        <div><small>${game.genre}</small></div>
+                        ${cartButtonsHtml}
+                    `;
+
+                    gameCard.innerHTML = gameHtml;
+
+                    // 게임 카드 클릭 이벤트 - 모달 열기
+                    gameCard.addEventListener("click", () => {
+                        openGameModal(game);
+                    });
+
+                    gameListEl.appendChild(gameCard);
+                });
+            }
+
+            // 게임 필터링
+            function filterGames() {
+                return games.filter((game) => {
+                    // 장르 필터
+                    const genreMatch =
+                        currentFilter.genre === "all" ||
+                        game.genre === currentFilter.genre;
+
+                    // 평점 필터 (새로 추가된 부분)
+                    const ratingMatch =
+                        currentFilter.rating === "all" ||
+                        game.rating >= parseInt(currentFilter.rating);
+
+                    // 기본 검색어 필터
+                    let searchMatch = true;
+
+                    if (currentFilter.searchTerm) {
+                        // @ 특수 검색 지원
+                        if (currentFilter.searchTerm.includes("@")) {
+                            const parts = currentFilter.searchTerm.split("@");
+                            const term = parts[0].trim().toLowerCase();
+                            const field = parts[1].trim().toLowerCase();
+
+                            // 필드별 검색
+                            switch (field) {
+                                case "이름":
+                                case "name":
+                                    searchMatch = game.name
+                                        .toLowerCase()
+                                        .includes(term);
+                                    break;
+                                case "장르":
+                                case "genre":
+                                    searchMatch = game.genre
+                                        .toLowerCase()
+                                        .includes(term);
+                                    break;
+                                case "가격":
+                                case "price":
+                                    searchMatch =
+                                        game.price <= parseFloat(term);
+                                    break;
+                                case "평점":
+                                case "rating":
+                                    searchMatch =
+                                        game.rating >= parseFloat(term);
+                                    break;
+                                default:
+                                    searchMatch =
+                                        game.name
+                                            .toLowerCase()
+                                            .includes(term) ||
+                                        game.description
+                                            .toLowerCase()
+                                            .includes(term) ||
+                                        game.genre.toLowerCase().includes(term);
+                            }
+                        } else {
+                            // 일반 검색
+                            const term = currentFilter.searchTerm.toLowerCase();
+                            searchMatch =
+                                game.name.toLowerCase().includes(term) ||
+                                game.description.toLowerCase().includes(term) ||
+                                game.genre.toLowerCase().includes(term);
+                        }
+                    }
+
+                    // 모든 필터 조건을 AND 연산으로 결합 (ratingMatch 추가)
+                    return genreMatch && ratingMatch && searchMatch;
+                });
+            }
+
+            // 장바구니에 게임 추가
+            function addToCart(gameId) {
+                // 이벤트 전파 방지
+                if (event) {
+                    event.stopPropagation();
+                }
+
+                if (!cart[gameId]) {
+                    cart[gameId] = 1;
+                } else {
+                    cart[gameId]++;
+                }
+
+                updateCartCount();
+                renderGames(); // 장바구니 카운트 업데이트를 위해 다시 렌더링
+            }
+
+            // 장바구니에서 게임 제거 함수
+            function removeFromCart(gameId, event) {
+                // 이벤트 전파 방지 (모달이 열리지 않도록)
+                if (event) {
+                    event.stopPropagation();
+                }
+
+                if (cart[gameId] && cart[gameId] > 0) {
+                    cart[gameId]--;
+
+                    // 수량이 0이 되면 객체에서 제거
+                    if (cart[gameId] === 0) {
+                        delete cart[gameId];
+                    }
+
+                    updateCartCount();
+                    renderGames(); // 장바구니 카운트 업데이트를 위해 다시 렌더링
+                }
+            }
+
+            // 장바구니 카운트 업데이트
+            function updateCartCount() {
+                const totalItems = Object.values(cart).reduce(
+                    (sum, count) => sum + count,
+                    0
+                );
+                cartCountEl.textContent = totalItems;
+            }
+
+            // 이벤트 리스너 등록
+            // 검색어 필터 적용
+            searchInput.addEventListener("input", (e) => {
+                currentFilter.searchTerm = e.target.value;
+                renderGames();
+            });
+
+            // 장르 필터 적용
+            genreSelect.addEventListener("change", (e) => {
+                currentFilter.genre = e.target.value;
+                renderGames();
+            });
+
+            // 별점 선택 이벤트 리스너
+            ratingSelect.addEventListener("change", (e) => {
+                currentFilter.rating = e.target.value;
+                renderGames();
+            });
+
+            // 초기 렌더링
+            renderGames();
+
+            /*
+            코드 이해와 흐름
+
+            게임 목록 흐름
+                1. games 데이터 준비
+                2. 초기 렌더링 실행 : renderGames();
+                3. renderGames() 실행
+                4. filterGames() 실행
+                5.
+            */
+
+            /*
+            레거시 코드
+            
+            .cart-buttons {
+                display: flex;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            
+            // 게임 목록 렌더링
+            function renderGames() {
+                // 필터링된 게임 목록 가져오기
+                const filteredGames = filterGames();
+
+                // 기존 게임 목록 삭제
+                gameListEl.innerHTML = "";
+
+                // 3. 각 게임마다 카드 생성 및 추가
+                filteredGames.forEach((game) => {
+                    const gameCard = document.createElement("div");
+                    gameCard.className = "game-card";
+
+                    
+
+                    const gameHtml = `
+                    <div class="game-title">${game.name}</div>
+                    <div class="game-info">
+                        <span>가격 : $${game.price.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        평점 : <span class="rating">${getRatingStars(
+                            game.rating
+                        )}</span>
+                    </div>
+                    <div><small>장르 : ${game.genre}</small></div>
+                    <button class="cart-btn" onclick="addToCart(${game.id})">
+                        장바구니에 추가 ${
+                            cart[game.id] ? `(${cart[game.id]})` : ""
+                        }
+                    </button>
+                `;
+
+                    gameCard.innerHTML = gameHtml;
+
+                    // 게임 카드 클릭 이벤트 - 모달 열기
+                    gameCard.addEventListener("click", () => {
+                        openGameModal(game);
+                    });
+
+                    gameListEl.appendChild(gameCard);
+                });
+            }
+            */
+        </script>
+    </body>
+</html>
