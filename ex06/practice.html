@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div>
+            <span>hello</span>
+        </div>
+
+        <script>
+            function p1(initial) {
+                let value = initial;
+
+                return {
+                    add: function (number) {
+                        value += number;
+                        return `더하기 결과 : ${value}`;
+                    },
+                    sub: function (number) {
+                        value -= number;
+                        return `빼기 결과 : ${value}`;
+                    },
+                    mul: function (number) {
+                        value = value * number;
+                        return `곱하기 결과 : ${value}`;
+                    },
+                };
+            }
+
+            /*
+            const myp1 = p1(1000);
+            console.log(myp1.add(500));
+            console.log(myp1.sub(800));
+            console.log(myp1.mul(2));
+            */
+
+            //=================================================
+
+            function p2() {
+                let count = 0;
+
+                return function () {
+                    count++;
+                    return count;
+                };
+            }
+
+            /*
+            const myp2 = p2();
+            console.log(myp2());
+            console.log(myp2());
+            console.log(myp2());
+            */
+
+            //=================================================
+
+            // console.log(aa);
+            //var aa = 1;
+
+            //=================================================
+
+            /*
+            
+            미니 프롲게트 
+
+            쇼핑 사이트 구현(옷은 제외)
+                영화(예매)
+                    등급
+            
+            구현 기능
+                회원가입
+                    - 유효성 검사
+                    - 패스워드 암호화
+                    - 사용자 정보
+                        - 아이디
+                        - 패스워드
+                            - 스프링 암호화 api 사용
+                비회원/회원/관리자
+                    - 인증 
+                    - 인가
+                검색(조회)
+                    - 다중 조건 검색(제품의 종류, 최신순, ...)
+                    - 추천 서비스 제공을 위한 기반 데이터 추출
+                        - 예매한 영화를 기반으로 관련된 장르 영화 추천
+                        - 처음 유저는 회원가입에서 받은 데이터를 기반으로 추천
+                QNA, FAQ
+                    - 사용자 문의에 신속히 대응할 수 있는 방법 구상
+                    - 빈도가 높은 질문을 FAQ에 등록하는 방법 구상(관심도를 책정, 관리자가 직접 FAQ에 등록)
+                관리자 페이지 
+                    - 업무 편의성
+                    - 보고서
+                    - 시각화(차트, 그래프 라이브러리 사용)
+
+
+            화요일까지 마감
+            발표함
+            
+            */
+        </script>
+    </body>
+</html>
